@@ -21,19 +21,26 @@ export const Header: React.FC = () => {
         <IconButton>
           <MenuIcon />
         </IconButton>
+
         <Link href='/'>
           <a>
             <img height={35} className='mr-20' src='/static/img/logo.svg' alt='Logo' />
           </a>
         </Link>
+
         <div className={styles.searchBlock}>
           <SearchIcon />
           <input placeholder='Поиск' />
         </div>
-        <Button variant='contained' className={styles.penButton}>
-          Новая запись
-          {/* <PenIcon /> */}
-        </Button>
+
+        <Link href='/write'>
+          <a>
+            <Button variant='contained' className={styles.penButton}>
+              Новая запись
+              {/* <PenIcon /> */}
+            </Button>
+          </a>
+        </Link>
       </div>
       <div className='d-flex align-center'>
         <IconButton>

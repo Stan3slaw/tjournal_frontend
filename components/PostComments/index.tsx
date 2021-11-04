@@ -1,9 +1,15 @@
 import React from 'react';
 import { Divider, Paper, Tab, Tabs, Typography } from '@material-ui/core';
-import { Comment } from '../Comment';
 
-export const PostComments = () => {
+import { Comment } from '../Comment';
+import { AddCommentForm } from '../AddCommentForm';
+
+import data from '../../data';
+
+export const PostComments: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState(0);
+
+  const comments = data.comments[activeTab === 0 ? 'popular' : 'new'];
   return (
     <Paper elevation={0} className='mt-40 p-30'>
       <div className='container'>
@@ -20,11 +26,12 @@ export const PostComments = () => {
           <Tab label='По порядку' />
         </Tabs>
         <Divider />
+        <AddCommentForm />
         {/* <AddCommentForm /> */}
         <div className='mb-20' />
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((obj) => (
+          <Comment key={obj.id} text={obj.text} createdAt={obj.createdAt} user={obj.user} />
+        ))}
       </div>
     </Paper>
   );
