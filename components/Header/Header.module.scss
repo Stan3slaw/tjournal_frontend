@@ -1,0 +1,68 @@
+.root {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 35px 0px 10px;
+  margin-bottom: 15px;
+  background-color: #fff4e2 !important;
+  z-index: 1;
+}
+
+.logo {
+  width: 32px;
+  height: 42px;
+  margin-left: 10px;
+  margin-right: 25px;
+}
+
+.searchBlock {
+  position: relative;
+  display: flex;
+  margin-right: 15px;
+  width: 310px;
+  svg {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    opacity: 0.4;
+  }
+  input {
+    width: 100%;
+    height: 38px;
+    padding-left: 40px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      background-color: #fff;
+      border-color: darken(#fff4e2, 15%);
+      box-shadow: 0 0 0 3px rgb(229 160 64 / 12%);
+    }
+    &:focus {
+      background-color: #fff;
+      border-color: darken(#fff4e2, 30%);
+      box-shadow: 0 0 0 3px rgb(229 160 64 / 12%);
+    }
+  }
+}
+
+.penButton {
+  height: 40px !important;
+  text-transform: inherit !important;
+  font-size: 16px !important;
+  letter-spacing: 0;
+  // width: 40px !important;
+  // min-width: 40px !important;
+}
+
+.avatar {
+  margin-left: 15px;
+  margin-right: 6px;
+  border-radius: 20% !important;
+}
