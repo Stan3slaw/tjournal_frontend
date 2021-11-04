@@ -10,11 +10,23 @@ import {
   SmsOutlined as MessageIcon,
   NotificationsNoneOutlined as NotificationIcon,
   ExpandMoreOutlined as ArrowBottomIcon,
+  AccountCircleOutlined as UserIcon,
 } from '@material-ui/icons';
 
 import styles from './Header.module.scss';
+import { AuthDialog } from '../AuthDialog';
 
 export const Header: React.FC = () => {
+  const [authVisible, setAuthVisible] = React.useState(false);
+
+  const openAuthDialog = () => {
+    setAuthVisible(true);
+  };
+
+  const closeAuthDialog = () => {
+    setAuthVisible(false);
+  };
+
   return (
     <Paper classes={{ root: styles.root }} elevation={0}>
       <div className='d-flex align-center'>
@@ -42,23 +54,28 @@ export const Header: React.FC = () => {
           </a>
         </Link>
       </div>
-      <div className='d-flex align-center'>
+      <div className='d-flex align-center '>
         <IconButton>
           <MessageIcon />
         </IconButton>
         <IconButton>
           <NotificationIcon />
         </IconButton>
-        <Link href='/profile/1'>
-          <a className='d-flex align-center'>
-            <Avatar
-              className={styles.avatar}
-              alt='Remy Sharp'
-              src='http://www.old.ujd.edu.pl/media/pracownicy/f33439ed234f8f866335fbe7b600d767.jpg'
-            />
-            <ArrowBottomIcon />
-          </a>
-        </Link>
+        {/* <Link href='/profile/1'>
+        <a className='d-flex align-center'>
+          <Avatar
+            className={styles.avatar}
+            alt='Remy Sharp'
+            src='http://www.old.ujd.edu.pl/media/pracownicy/f33439ed234f8f866335fbe7b600d767.jpg'
+          />
+          <ArrowBottomIcon />
+        </a>
+      </Link> */}
+        <div className={styles.loginButton} onClick={openAuthDialog}>
+          <UserIcon />
+          Войти
+        </div>
+        <AuthDialog visible={authVisible} onClose={closeAuthDialog} />
       </div>
     </Paper>
   );
