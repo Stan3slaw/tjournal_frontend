@@ -15,8 +15,11 @@ import {
 
 import styles from './Header.module.scss';
 import { AuthDialog } from '../AuthDialog';
+import { useAppSelector } from '../../redux/hooks';
+import { selectUserData } from '../../redux/slices/user';
 
 export const Header: React.FC = () => {
+  const userData = useAppSelector(selectUserData);
   const [authVisible, setAuthVisible] = React.useState(false);
 
   const openAuthDialog = () => {
@@ -61,22 +64,25 @@ export const Header: React.FC = () => {
         <IconButton>
           <NotificationIcon />
         </IconButton>
-        {/* <Link href='/profile/1'>
-        <a className='d-flex align-center'>
-          <Avatar
-            className={styles.avatar}
-            alt='Remy Sharp'
-            src='http://www.old.ujd.edu.pl/media/pracownicy/f33439ed234f8f866335fbe7b600d767.jpg'
-          />
-          <ArrowBottomIcon />
-        </a>
-      </Link> */}
-        <div className={styles.loginButton} onClick={openAuthDialog}>
-          <UserIcon />
-          Войти
-        </div>
-        <AuthDialog visible={authVisible} onClose={closeAuthDialog} />
+        {userData ? (
+          <Link href='/profile/1'>
+            <a className='d-flex align-center'>
+              <Avatar
+                className={styles.avatar}
+                alt='Remy Sharp'
+                src='http://www.old.ujd.edu.pl/media/pracownicy/f33439ed234f8f866335fbe7b600d767.jpg'
+              />
+              <ArrowBottomIcon />
+            </a>
+          </Link>
+        ) : (
+          <div className={styles.loginButton} onClick={openAuthDialog}>
+            <UserIcon />
+            Войти
+          </div>
+        )}
       </div>
+      <AuthDialog visible={authVisible} onClose={closeAuthDialog} />
     </Paper>
   );
 };

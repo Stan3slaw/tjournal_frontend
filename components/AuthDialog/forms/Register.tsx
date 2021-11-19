@@ -8,14 +8,19 @@ import { Button } from '@material-ui/core';
 import { CreateUserDto } from '../../../utils/api/types';
 import { UserApi } from '../../../utils/api';
 import { Alert } from '@material-ui/lab';
+import { setUserData } from '../../../redux/slices/user';
+import { useAppDispatch } from '../../../redux/hooks';
 
 interface RegisterFormProps {
   onOpenLogin: () => void;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenLogin }) => {
+  const dispatch = useAppDispatch();
+
   const [errorMessage, setErrorMessage] = React.useState('');
   const form = useForm({ resolver: yupResolver(RegisterFormSchema), mode: 'onChange' });
+
   const onSubmit = async (createUserDto: CreateUserDto) => {
     try {
       const data = await UserApi.register(createUserDto);
@@ -24,8 +29,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenLogin }) => {
         path: '',
       });
       setErrorMessage('');
-      console.log(data);
-    } catch (err) {
+      dispatch(setUserData(data));
+    } catch (err: any) {
       console.warn('Registration error', err);
       if (err.response) {
         setErrorMessage(err.response.data.message);

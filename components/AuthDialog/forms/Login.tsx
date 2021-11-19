@@ -8,20 +8,29 @@ import { LoginFormSchema } from '../../../utils/validation';
 import { FormField } from '../../FormField';
 import { LoginUserDto } from '../../../utils/api/types';
 import { UserApi } from '../../../utils/api';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setUserData } from '../../../redux/slices/user';
+import { setCookie } from 'nookies';
 
 interface LoginFormProps {
   onOpenRegister: () => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
+  const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = React.useState('');
   const form = useForm({ resolver: yupResolver(LoginFormSchema), mode: 'onChange' });
+
   const onSubmit = async (loginUserDto: LoginUserDto) => {
     try {
       const data = await UserApi.login(loginUserDto);
+      setCookie(null, 'token', data.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '',
+      });
       setErrorMessage('');
-      console.log(data);
-    } catch (err) {
+      dispatch(setUserData(data));
+    } catch (err: any) {
       console.warn('Login error', err);
       if (err.response) {
         setErrorMessage(err.response.data.message);

@@ -5,8 +5,9 @@ import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
 import '../styles/globals.scss';
 import 'macro-css';
 import theme from '../styles/theme';
+import { wrapper } from '../redux/store';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -28,4 +29,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(App);

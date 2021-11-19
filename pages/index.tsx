@@ -1,8 +1,12 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import { Post } from '../components/Post';
 import { MainLayout } from '../layouts/MainLayout';
+import { setUserData } from '../redux/slices/user';
+import { wrapper } from '../redux/store';
+import { UserApi } from '../utils/api';
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
     <MainLayout>
       <Post />
@@ -14,6 +18,20 @@ const Home: NextPage = () => {
       <Post />
     </MainLayout>
   );
-};
+}
 
-export default Home;
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
+  (store) => async (ctx) => {
+    try {
+      const { token } = parseCookies(ctx);
+      const userData = await UserApi.getMe(token);
+
+      store.dispatch(setUserData(userData));
+
+      return { props: {} };
+    } catch (err) {
+      console.log(err);
+      return { props: {} };
+    }
+  },
+);
