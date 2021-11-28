@@ -15,6 +15,12 @@
   font-weight: 500 !important;
 }
 
+.text {
+  a {
+    color: #e5a040;
+    text-decoration: underline;
+  }
+}
 .userInfo {
   display: flex;
   align-items: center;
