@@ -13,7 +13,7 @@ const Post: NextPage<FullPostPageProps> = ({ post }) => {
   return (
     <MainLayout className='mb-50' contentFullWidth>
       <FullPost title={post.title} blocks={post.body} />
-      <PostComments />
+      <PostComments postId={post.id} />
     </MainLayout>
   );
 };

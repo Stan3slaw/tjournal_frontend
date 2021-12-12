@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 import {
   Paper,
@@ -15,12 +15,19 @@ import {
 import { MainLayout } from '../layouts/MainLayout';
 import { FollowButton } from '../components/FollowButton';
 
-const Rating: NextPage = () => {
+import { Api } from '../utils/api';
+import { UserResponse } from '../utils/api/types';
+
+interface RatingPageProps {
+  users: UserResponse[];
+}
+
+const Rating: NextPage<RatingPageProps> = ({ users }) => {
   return (
     <MainLayout>
       <Paper elevation={0} className='pl-20 pt-20 pr-20 mb-20'>
         <Typography variant='h5' style={{ fontWeight: 'bold', fontSize: 30, marginBottom: 6 }}>
-          Рейтинг сообществ и блогов
+          Рейтинг пользователей
         </Typography>
         <Typography style={{ fontSize: 15 }}>
           Десять лучших авторов и комментаторов, а также администраторы первых десяти сообществ из
@@ -43,20 +50,35 @@ const Rating: NextPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell component='th' scope='row'>
-                <span className='mr-15'>1</span>Вася Пупкин
-              </TableCell>
-              <TableCell align='right'>540</TableCell>
-              <TableCell align='right'>
-                <FollowButton />
-              </TableCell>
-            </TableRow>
+            {users.map((obj) => (
+              <TableRow key={obj.id}>
+                <TableCell component='th' scope='row'>
+                  <span className='mr-15'>{obj.id}</span>
+                  {obj.fullName}
+                </TableCell>
+                <TableCell align='right'>{obj.commentsCount * 2}</TableCell>
+                <TableCell align='right'>
+                  <FollowButton />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Paper>
     </MainLayout>
   );
+};
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const users = await Api().user.getAll();
+
+    return {
+      props: { users },
+    };
+  } catch (err) {
+    console.log('Rating page', err);
+    return { props: {}, redirect: { destination: '/', permanent: false } };
+  }
 };
 
 export default Rating;

@@ -5,9 +5,7 @@ import MessageIcon from '@material-ui/icons/TextsmsOutlined';
 import UserAddIcon from '@material-ui/icons/PersonAddOutlined';
 
 import styles from './FullPost.module.scss';
-import { NextPage } from 'next';
 import { OutputData } from '@editorjs/editorjs';
-import { BlockSharp } from '@material-ui/icons';
 
 interface FullPostProps {
   title: string;

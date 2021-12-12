@@ -2,6 +2,11 @@ import { AxiosInstance } from 'axios';
 import { CreateUserDto, LoginUserDto, UserResponse } from './types';
 
 export const UserApi = (instance: AxiosInstance) => ({
+  async getAll() {
+    const { data } = await instance.get<UserResponse[]>('/users');
+    return data;
+  },
+
   async register(createUserDto: CreateUserDto) {
     const { data } = await instance.post<CreateUserDto, { data: UserResponse }>(
       '/auth/register',

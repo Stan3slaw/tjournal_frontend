@@ -7,9 +7,14 @@ import styles from './SideComments.module.scss';
 import { CommentItem } from './CommentItem';
 
 import data from '../../data';
+import { Api } from '../../utils/api';
+import { CommentType } from '../../utils/api/types';
+import { useComments } from '../../hooks/useComments';
 
 export const SideComments = () => {
   const [visible, setVisible] = React.useState(true);
+  const { comments } = useComments();
+
   const toogleVisible = () => {
     setVisible(!visible);
   };
@@ -18,7 +23,10 @@ export const SideComments = () => {
       <h3 onClick={toogleVisible}>
         Комментарии <ArrowRightIcon />
       </h3>
-      {visible && data.comments.popular.map((obj) => <CommentItem key={obj.id} {...obj} />)}
+      {visible &&
+        comments.map((obj) => (
+          <CommentItem key={obj.id} text={obj.text} user={obj.user} post={obj.post} />
+        ))}
     </div>
   );
 };

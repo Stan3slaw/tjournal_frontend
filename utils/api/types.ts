@@ -11,6 +11,7 @@ export type CreateUserDto = {
 
 export type UserResponse = {
   id: number;
+  commentsCount?: number;
   email: string;
   fullName: string;
   createdAt: string;
@@ -25,6 +26,15 @@ export type PostType = {
   tags: null | string;
   id: number;
   views: number;
+  user: UserResponse;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CommentType = {
+  id: number;
+  text: string;
+  post: PostType;
   user: UserResponse;
   createdAt: string;
   updatedAt: string;
